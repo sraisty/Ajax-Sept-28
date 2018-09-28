@@ -41,22 +41,22 @@ $("#weather-form").on('submit', showWeather);
 
 
 // PART 3: ORDER MELONS
-    // TODO: show the result message after your form
-    // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
 
 function displayOrderStatus(result) {
-  let status_string = `Code: ${result.code}, Message: ${result.msg}`;
+  let code = result.code;
+  if (code === 'ERROR') {
+    $('#order-status').addClass('order-error');
+  }
+  let status_string = `${code}: ${result.msg}`;
   $('#order-status').html(status_string);
 }
 
 function orderMelons(evt) {
     evt.preventDefault();
     let formData = {
-      "melon_type":$('#melon-type-field').val(),
-      "qty":$('#qty-field').val(),
+      "melon_type": $('#melon-type-field').val(),
+      "qty": $('#qty-field').val(),
     };
-
-
   $.post('/order-melons.json',formData,displayOrderStatus);
 }
 
